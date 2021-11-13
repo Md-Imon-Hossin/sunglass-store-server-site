@@ -129,8 +129,6 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
           res.json(result)
         })
         
-
-
     }
     finally{
         // await client.close()
