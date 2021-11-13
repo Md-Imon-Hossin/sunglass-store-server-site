@@ -21,12 +21,24 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
         const bookingsCollection = database.collection('bookings') 
         const usersCollection = database.collection('users') 
         const exploresCollection = database.collection('explores') 
+        const reviewsCollection = database.collection('reviews') 
         // GET API 
         app.get('/products',async(req,res)=>{
             const cursor = productsCollection.find({}) 
             const products = await cursor.toArray() 
             res.send(products)
         })
+
+        
+        app.get('/products/query', async (req, res) => {
+          const limit = req.query.limit;
+          console.log(limit)
+          const number = parseInt(limit);
+          console.log(number)
+          const cursor = productsCollection.find({});
+          const purchases = await cursor.limit(number).toArray();
+          res.json(purchases)
+      })
         // POST API 
         app.post('/products',async(req,res)=>{
             const product = req.body ;
@@ -102,6 +114,22 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
           const result = await exploresCollection.find({}).toArray()
           res.send(result)
         })
+        // All Review  
+        app.get('/reviews',async(req,res)=>{
+          const cursor = reviewsCollection.find({}) 
+          const reviews = await cursor.toArray() 
+          res.send(reviews)
+      })
+
+        app.post('/reviews',async(req,res)=>{
+          const reviews = req.body ;
+          console.log(reviews)
+          const result = await reviewsCollection.insertOne(reviews)
+          console.log(result)
+          res.json(result)
+        })
+        
+
 
     }
     finally{
