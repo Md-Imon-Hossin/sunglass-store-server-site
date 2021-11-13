@@ -16,12 +16,10 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
   async function run(){
     try{
         await client.connect()
-        // console.log('database connected') 
         const database = client.db('sunGlass') 
         const productsCollection = database.collection('products') 
         const bookingsCollection = database.collection('bookings') 
         const usersCollection = database.collection('users') 
-        // explore
         const exploresCollection = database.collection('explores') 
         // GET API 
         app.get('/products',async(req,res)=>{
