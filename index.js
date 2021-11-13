@@ -102,8 +102,6 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
           const result = await bookingsCollection.find({}).toArray()
           res.send(result)
         })
-
-
         // All Review  
         app.get('/reviews',async(req,res)=>{
           const cursor = reviewsCollection.find({}) 
