@@ -20,7 +20,7 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
         const productsCollection = database.collection('products') 
         const bookingsCollection = database.collection('bookings') 
         const usersCollection = database.collection('users') 
-        const exploresCollection = database.collection('explores') 
+        // const exploresCollection = database.collection('explores') 
         const reviewsCollection = database.collection('reviews') 
         // GET API 
         app.get('/products',async(req,res)=>{
@@ -29,7 +29,6 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
             res.send(products)
         })
 
-        
         app.get('/products/query', async (req, res) => {
           const limit = req.query.limit;
           console.log(limit)
@@ -39,7 +38,7 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
           const purchases = await cursor.limit(number).toArray();
           res.json(purchases)
       })
-        // POST API 
+        // POST Product
         app.post('/products',async(req,res)=>{
             const product = req.body ;
             console.log('hit the post api',product) 
@@ -104,16 +103,7 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
           res.send(result)
         })
 
-        app.post('/addProduct',(req,res)=>{
-          exploresCollection.insertOne(req.body).then(result=>{
-            res.send(result.insertedId)
-          })
-        })
 
-        app.get('/exploreProduct',async(req,res)=>{
-          const result = await exploresCollection.find({}).toArray()
-          res.send(result)
-        })
         // All Review  
         app.get('/reviews',async(req,res)=>{
           const cursor = reviewsCollection.find({}) 
